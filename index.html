@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐸 MemeZone - ตลกจนเขียวหน้า</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0d1f0d;
+      color: #a8f0a8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a4a1a, #2d7a2d);
+      border-bottom: 3px solid #4caf50;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px #00ff0033;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #39ff14;
+      text-shadow: 0 0 20px #39ff14, 0 0 40px #39ff1488;
+      letter-spacing: 4px;
+    }
+
+    header p {
+      color: #80c880;
+      margin-top: 8px;
+      font-size: 1.1rem;
+    }
+
+    .ticker {
+      background: #163316;
+      border-top: 1px solid #4caf50;
+      border-bottom: 1px solid #4caf50;
+      overflow: hidden;
+      padding: 8px 0;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 20s linear infinite;
+      color: #39ff14;
+      font-size: 0.95rem;
+    }
+
+    @keyframes scroll {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #39ff14;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #2d7a2d;
+    }
+
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+
+    .meme-card {
+      background: #142414;
+      border: 2px solid #2d7a2d;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .meme-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px #39ff1444;
+      border-color: #39ff14;
+    }
+
+    .meme-emoji-box {
+      font-size: 5rem;
+      text-align: center;
+      padding: 30px 20px 10px;
+      background: #1a3a1a;
+      user-select: none;
+    }
+
+    .meme-body {
+      padding: 16px;
+    }
+
+    .meme-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #6eff6e;
+      margin-bottom: 8px;
+    }
+
+    .meme-caption {
+      font-size: 0.95rem;
+      color: #80c880;
+      line-height: 1.5;
+    }
+
+    .meme-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-top: 1px solid #2d7a2d;
+      font-size: 0.85rem;
+      color: #4caf50;
+    }
+
+    .like-btn {
+      background: none;
+      border: 1px solid #4caf50;
+      border-radius: 20px;
+      color: #4caf50;
+      padding: 4px 14px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .like-btn:hover, .like-btn.liked {
+      background: #4caf50;
+      color: #0d1f0d;
+    }
+
+    .meme-of-day {
+      background: linear-gradient(135deg, #1a4a1a, #0f2f0f);
+      border: 2px solid #39ff14;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 50px;
+      text-align: center;
+      box-shadow: 0 0 30px #39ff1433;
+    }
+
+    .meme-of-day .badge {
+      background: #39ff14;
+      color: #0d1f0d;
+      font-weight: bold;
+      font-size: 0.8rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+
+    .meme-of-day .big-emoji {
+      font-size: 8rem;
+      display: block;
+      margin: 10px 0;
+    }
+
+    .meme-of-day h2 {
+      color: #39ff14;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .meme-of-day p {
+      color: #a8f0a8;
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .quote-box {
+      background: #1a3a1a;
+      border-left: 5px solid #39ff14;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 50px;
+      font-size: 1.2rem;
+      color: #c8f8c8;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    .quote-box span {
+      display: block;
+      margin-top: 10px;
+      font-style: normal;
+      color: #4caf50;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #0a180a;
+      border-top: 2px solid #2d7a2d;
+      text-align: center;
+      padding: 20px;
+      color: #4caf50;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #39ff14;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      .meme-of-day .big-emoji { font-size: 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🐸 MEMEZONE</h1>
+    <p>ตลกจนเขียวหน้า • อัพเดทตลอด 25 ชั่วโมง</p>
+  </header>
+
+  <div class="ticker">
+    <span class="ticker-inner">
+      🐸 "โปรแกรมเมอร์ไม่มีบั๊ก มีแค่ feature ที่ยังไม่ได้อธิบาย" &nbsp;|&nbsp;
+      🌿 "Monday is the root of all evil" &nbsp;|&nbsp;
+      💚 "Git push แล้ว production พัง = ศิลปะ" &nbsp;|&nbsp;
+      🐢 "Code ที่ทำงานได้ คือ Code ที่ดี อย่า refactor" &nbsp;|&nbsp;
+      🟢 "ยิ่ง debug นาน ยิ่งฉลาด ™"
+    </span>
+  </div>
+
+  <div class="container">
+
+    <!-- Meme of the Day -->
+    <div class="meme-of-day">
+      <div class="badge">⭐ MEME OF THE DAY</div>
+      <span class="big-emoji">🐸</span>
+      <h2>Pepe กับ deadline</h2>
+      <p>"เมื่อ PM บอกว่า 'แค่เปลี่ยนสีปุ่มหน่อยนะ' แต่ออกแบบใหม่ทั้งหน้า"</p>
+    </div>
+
+    <!-- Quote -->
+    <div class="quote-box">
+      "ชีวิตโปรแกรมเมอร์คือ:<br>
+      วันจันทร์ – เขียน code<br>
+      วันอังคาร – debug code วันจันทร์<br>
+      วันพุธ – อ่าน Stack Overflow<br>
+      วันพฤหัส – copy-paste จาก Stack Overflow<br>
+      วันศุกร์ – ทำ PR แล้วฝันว่า approve ไม่มี comment"
+      <span>— ปรัชญาเซน สาย Dev 🌿</span>
+    </div>
+
+    <!-- Meme Grid -->
+    <div class="section-title">🟢 Meme ฮิตประจำสัปดาห์</div>
+    <div class="meme-grid" id="memeGrid"></div>
+
+  </div>
+
+  <footer>
+    <p>Made with 💚 and too much caffeine &nbsp;|&nbsp; <a href="#">@memezone_th</a></p>
+    <p style="margin-top:6px; color:#2d7a2d;">© 2026 MemeZone — ตลกทุกวัน ไม่มีวันหยุด</p>
+  </footer>
+
+  <script>
+    const memes = [
+      {
+        emoji: "😴",
+        title: "เมื่อ stand-up meeting ยาวกว่า sprint",
+        caption: "\"เดี๋ยวคุยกันสั้นๆ 5 นาทีนะ\" — เวลาผ่านไป 45 นาที",
+        tag: "🏃 Agile Life",
+      },
+      {
+        emoji: "🤡",
+        title: "Production vs Dev environment",
+        caption: "Dev: ทำงานได้ 100% ✅\nProd: ระเบิด 💥\n\"แต่บนเครื่องฉัน run ได้นะ\"",
+        tag: "🖥️ Backend",
+      },
+      {
+        emoji: "🧅",
+        title: "Legacy Code ชั้นที่ 99",
+        caption: "เปิดไฟล์ดู... ไม่มี comment สักบรรทัด\nเขียนโดยใคร? ปี 2009\nคนเขียนออกไปแล้ว 😇",
+        tag: "👴 Classic",
+      },
+      {
+        emoji: "☕",
+        title: "กาแฟแก้วที่ 6",
+        caption: "ชั่วโมงที่ 14 ของการ debug:\n\"ปัญหาอยู่ที่บรรทัด 1\n ลืมปิด parenthesis\"",
+        tag: "☕ Dev Life",
+      },
+      {
+        emoji: "🦆",
+        title: "Rubber Duck Debugging",
+        caption: "อธิบายปัญหาให้เป็ดยาง\nเป็ดไม่พูด\nแต่ดันเจอ bug เอง\n\nเป็ดฉลาดกว่า senior ทีม 🤫",
+        tag: "🦆 Tips",
+      },
+      {
+        emoji: "🌵",
+        title: "ประชุม Zoom ชั่วโมงสุดท้าย",
+        caption: "\"เดี๋ยวคุยเรื่องนี้ offline นะ\"\n\nOffline = อีเมลยาว 3 หน้า\nที่ไม่มีใครอ่าน",
+        tag: "📧 Meeting",
+      },
+      {
+        emoji: "🔥",
+        title: "เมื่อ intern push โดยตรงถึง main",
+        caption: "Senior: 😱\nPM: 😰\nCTO: 🤬\nIntern: \"ทำไมไม่มี staging branch บอกฉันก่อนสิ\"",
+        tag: "🔥 Intern Mode",
+      },
+      {
+        emoji: "🗿",
+        title: "CSS ไม่ center ตามที่คิด",
+        caption: "Stack Overflow: ลอง margin: auto\nฉัน: ลองแล้ว ไม่ work\nStack Overflow: ...\nฉัน: ลอง !important\nDesigner: 😭",
+        tag: "🎨 Frontend",
+      },
+      {
+        emoji: "🐌",
+        title: "npm install",
+        caption: "เริ่ม install: 10:00 AM\nเสร็จ: ?\nnode_modules: 400MB\nสิ่งที่ใช้จริง: 3 ไฟล์",
+        tag: "📦 Node.js",
+      },
+    ];
+
+    const grid = document.getElementById('memeGrid');
+
+    memes.forEach((meme, i) => {
+      const card = document.createElement('div');
+      card.className = 'meme-card';
+      let likes = Math.floor(Math.random() * 900) + 100;
+
+      card.innerHTML = `
+        <div class="meme-emoji-box">${meme.emoji}</div>
+        <div class="meme-body">
+          <div class="meme-title">${meme.title}</div>
+          <div class="meme-caption">${meme.caption.replace(/\n/g, '<br>')}</div>
+        </div>
+        <div class="meme-footer">
+          <span>${meme.tag}</span>
+          <button class="like-btn" data-likes="${likes}" onclick="toggleLike(this)">
+            💚 <span class="count">${likes}</span>
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    function toggleLike(btn) {
+      const countEl = btn.querySelector('.count');
+      let current = parseInt(countEl.textContent);
+      if (btn.classList.contains('liked')) {
+        btn.classList.remove('liked');
+        countEl.textContent = current - 1;
+      } else {
+        btn.classList.add('liked');
+        countEl.textContent = current + 1;
+      }
+    }
+  </script>
+</body>
+</html>

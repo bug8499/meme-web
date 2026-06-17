@@ -1,0 +1,23 @@
+name: Deploy Prod
+
+on:
+  push:
+    branches:
+      - main     # ← ไฟล์นี้ trigger เฉพาะ release
+  workflow_dispatch:
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+jobs:
+  deploy:
+    uses: bug8499/IaC-GitOps/.github/workflows/argocicd.yml@main
+    with:
+      service_name: "meme-website"
+      environment: "prod"
+      image_tag: ${{ github.sha }}
+      ecr_alias: "r8m4q7l9"
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      GH_PAT: ${{ secrets.GH_PAT }}
